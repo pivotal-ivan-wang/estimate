@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+
+  "name": "Estimates for Pivotal Tracker",
+  "short_name": "Estimate",
+  "description": "Injects stuff",
+  "version": "1.0",
+  "author": "Ivan Wang",
+  "homepage_url": "https://github.com/pivotal-ivan-wang/remote-ipm",
+  "permissions": [
+    "http://www.pivotaltracker.com/*",
+    "https://www.pivotaltracker.com/*",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.pivotaltracker.com/*",
+        "https://www.pivotaltracker.com/*"
+      ],
+      "js": [
+        "socket.io.min.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ]
+}

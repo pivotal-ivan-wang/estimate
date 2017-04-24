@@ -1,0 +1,21 @@
+{
+  "name": "estimate",
+  "version": "0.0.0",
+  "description": "estimate client",
+  "main": "index.js",
+  "author": "Ivan Wang",
+  "private": true,
+  "license": "",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3",
+    "typescript": "^2.2.2"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.3"
+  }
+}

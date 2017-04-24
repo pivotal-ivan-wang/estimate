@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Estimate</title>
+  <style type="text/css">
+    * {
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+      -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+      box-sizing: border-box;         /* Opera/IE 8+ */
+    }
+
+    .room-data {
+      text-align: center;
+    }
+    
+    .container {
+      padding: 20px;
+      background: #FFE8B9;
+    }
+  </style>
+  <script type="text/javascript">
+    
+  </script>
+</head>
+<body>
+  <div class="container">
+    <p class="room-data"></p>
+  </div>
+
+  <input class="room-input" type="text" placeholder="room" />
+  <input class="user-input" type="text" placeholder="user" />
+  <button class="join-button">join</button>
+  <br>
+  <button class="estimate-button" data-estimate="0" disabled="true">0</button>
+  <button class="estimate-button" data-estimate="1" disabled="true">1</button>
+  <button class="estimate-button" data-estimate="2" disabled="true">2</button>
+  <button class="estimate-button" data-estimate="3" disabled="true">3</button>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+</body>
+</html>

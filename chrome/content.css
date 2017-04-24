@@ -1,0 +1,24 @@
+.estimate-button {
+	float: right;
+	margin: 2px 10px 0 0;
+	background-color: #20b2aa;
+	border: 1px solid #008080;
+	color: #eee;
+	line-height: 20px;
+	font-weight: 600;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 11px;
+	text-align: center;
+	text-decoration: none;
+	position: relative;
+	width: 56px;
+	border-radius: 3px;
+	vertical-align: baseline;
+}
+
+.ipm-room {
+    color: #cadce4;
+    cursor: pointer;
+    font-weight: 600;
+}
