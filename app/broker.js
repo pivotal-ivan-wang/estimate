@@ -22,11 +22,12 @@ function Broker(socket) {
         user = data.user;
 
         if (session[room] === undefined) {
-          clientSocket.emit('update', {you: 'failed'});
+          clientSocket.emit('join fail');
         } else {
           session[room].users[user] = -1;
 
           clientSocket.join(room);
+          clientSocket.emit('join success');
           serverSocket.to(room).emit('update', session[room]);
         }
       });
@@ -37,12 +38,12 @@ function Broker(socket) {
         serverSocket.to(room).emit('update', session[room]);
       });
 
-      clientSocket.on('clear', function() {
+      clientSocket.on('request estimate', function() {
         var users = Object.keys(session[room].users);
         for (var i = 0; i < users.length; i ++) {
           session[room].users[users[i]] = -1;
         }
-        serverSocket.to(room).emit('update', session[room]);
+        serverSocket.to(room).emit('request estimate', session[room]);
       });
 
       clientSocket.on('disconnect', function() {

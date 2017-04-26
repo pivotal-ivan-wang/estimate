@@ -1,40 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Estimate</title>
+	<title>Remote IPM</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <style type="text/css">
-    * {
-      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-      -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-      box-sizing: border-box;         /* Opera/IE 8+ */
+    .estimate-header-container {
+      margin-top: 16px;
     }
 
-    .room-data {
-      text-align: center;
+    .estimate-button {
+      margin-bottom: 32px;
     }
-    
-    .container {
-      padding: 20px;
-      background: #FFE8B9;
+
+    .loader {
+      border: 8px solid #f3f3f3; /* Light grey */
+      border-top: 8px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
-  <script type="text/javascript">
-    
-  </script>
 </head>
 <body>
-  <div class="container">
-    <p class="room-data"></p>
+  <div class="join-room-container w3-display-middle">
+    <label>Room name</label>
+    <input class="room-input w3-input w3-border w3-margin-bottom" type="text"/>
+    <label>Your name</label>
+    <input class="user-input w3-input w3-border w3-margin-bottom" type="text"/>
+    <button class="join-button w3-block w3-button w3-teal">Join</button>
   </div>
 
-  <input class="room-input" type="text" placeholder="room" />
-  <input class="user-input" type="text" placeholder="user" />
-  <button class="join-button">join</button>
-  <br>
-  <button class="estimate-button" data-estimate="0" disabled="true">0</button>
-  <button class="estimate-button" data-estimate="1" disabled="true">1</button>
-  <button class="estimate-button" data-estimate="2" disabled="true">2</button>
-  <button class="estimate-button" data-estimate="3" disabled="true">3</button>
+  <div class="loader-container w3-display-middle w3-center" style="display:none;">
+    <div class="loader"></div>
+  </div>
+
+  <div class="estimate-container" style="display:none;">
+    <div class="estimate-header-container w3-display-topmiddle">
+      <p>Extension estimate dialog shows all estimates after voting</p>
+      <p>Story: <a href="https://www.google.com/" target="_blank">Link!</a></p>
+    </div>
+
+    <div class="w3-display-middle w3-center">
+      <p>group estimate:</p>
+      <div class="estimate-progress-bar w3-light-grey">
+        <div class="estimate-progress w3-green w3-center" style="height:24px;width:0%"></div>
+      </div>
+    </div>
+
+    <div class="w3-display-bottommiddle w3-center" style="width:80%">
+      <div id="estimate-buttons-container">
+        <button class="estimate-button w3-round w3-button w3-border" data-estimate="0">0</button>
+        <button class="estimate-button w3-round w3-button w3-border" data-estimate="1">1</button>
+        <button class="estimate-button w3-round w3-button w3-border" data-estimate="2">2</button>
+        <button class="estimate-button w3-round w3-button w3-border" data-estimate="3">3</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>

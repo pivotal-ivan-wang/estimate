@@ -4,7 +4,7 @@ chrome.extension.sendMessage({}, function(response) {
       clearInterval(readyStateCheckInterval);
 
       //socket stuff
-      var socket = io.connect('https://limitless-woodland-86386.herokuapp.com/');
+      var socket = io.connect('https://limitless-woodland-86386.herokuapp.com:80');
 
       var openRoom;
       var roomSession;
@@ -110,7 +110,7 @@ chrome.extension.sendMessage({}, function(response) {
               estimateButton.className = 'estimate-button';
               estimateButton.innerHTML = "Estimate";
               estimateButton.onclick = function() {
-                socket.emit('clear');
+                socket.emit('request estimate');
                 estimateDialog.showModal();
               };
               row.appendChild(estimateButton);

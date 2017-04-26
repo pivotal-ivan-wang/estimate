@@ -24,7 +24,7 @@ describe('broker', function() {
     var onHost;
     var onJoin;
     var onEstimate;
-    var onClear;
+    var onRequestEstimate;
     var onDisconnect;
     var onPing;
 
@@ -33,7 +33,7 @@ describe('broker', function() {
       onHost = clientSocket.on.calls.argsFor(0)[1];
       onJoin = clientSocket.on.calls.argsFor(1)[1];
       onEstimate = clientSocket.on.calls.argsFor(2)[1];
-      onClear = clientSocket.on.calls.argsFor(3)[1];
+      onRequestEstimate = clientSocket.on.calls.argsFor(3)[1];
       onDisconnect = clientSocket.on.calls.argsFor(4)[1];
       onPing = clientSocket.on.calls.argsFor(5)[1];
     });
@@ -42,7 +42,7 @@ describe('broker', function() {
       expect(clientSocket.on.calls.argsFor(0)[0]).toBe('host');
       expect(clientSocket.on.calls.argsFor(1)[0]).toBe('join');
       expect(clientSocket.on.calls.argsFor(2)[0]).toBe('estimate');
-      expect(clientSocket.on.calls.argsFor(3)[0]).toBe('clear');
+      expect(clientSocket.on.calls.argsFor(3)[0]).toBe('request estimate');
       expect(clientSocket.on.calls.argsFor(4)[0]).toBe('disconnect');
       expect(clientSocket.on.calls.argsFor(5)[0]).toBe('ping');
     });
@@ -58,11 +58,12 @@ describe('broker', function() {
     describe('on join', function() {
       it('should fail room if doesnt exist', function() {
         onJoin({ room: 'room1', user: 'user1' });
-        expect(clientSocket.emit).toHaveBeenCalledWith('update', { 'you': 'failed' });
+        expect(clientSocket.emit).toHaveBeenCalledWith('join fail');
       });
 
       it('should join room if exists', function() {
-        onJoin({ room: 'room0', user: 'user2' })
+        onJoin({ room: 'room0', user: 'user2' });
+        expect(clientSocket.emit).toHaveBeenCalledWith('join success');
         expect(serverSocket.emit).toHaveBeenCalledWith('update', { 'roomName': 'room0', 'users': { 'user2': -1 } });
       });
     });
@@ -75,9 +76,9 @@ describe('broker', function() {
       });
     });
 
-    describe('on clear', function() {
+    describe('on request estimate', function() {
       it('should set all user estimates to -1', function() {
-        onClear();
+        onRequestEstimate();
         expect(serverSocket.to).toHaveBeenCalledWith('room0');
         expect(serverSocket.emit).toHaveBeenCalledWith('update', { 'roomName': 'room0', 'users': { 'user2': -1 } });
       });

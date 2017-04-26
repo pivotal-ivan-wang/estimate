@@ -1,25 +1,47 @@
 $(document).ready(function () {
   var socket = io();
-  var $roomInput = $('.room-input');
-  var $userInput = $('.user-input');
-  var $joinButton = $('.join-button');
-  var $estimateButton = $('.estimate-button');
 
-  $joinButton.click(function join() {
-    if ($roomInput.val() !== "" && $userInput.val() !== "") {
-      $roomInput.prop('disabled', true);
-      $userInput.prop('disabled', true);
-      $joinButton.prop('disabled', true);
-      $estimateButton.prop('disabled', false);
-      socket.emit('join', {room: $roomInput.val(), user: $userInput.val()});
+  $('.join-button').click(function join() {
+    if ($('.room-input').val() !== "" && $('.user-input').val() !== "") {
+      socket.emit('join', {room: $('.room-input').val(), user: $('.user-input').val()});
     }
   });
 
-  $estimateButton.click(function estimate() {
+  $('.estimate-button').click(function estimate() {
     socket.emit('estimate', parseInt($(this).data("estimate")));
   });
 
-  socket.on('update', function(session) {
-    $('.room-data').text(JSON.stringify(session));
+  socket.on('join success', function() {
+    $('.join-room-container').hide();
+    $('.estimate-container').hide();
+    $('.loader-container').show();
   });
+
+  socket.on('join fail', function() {
+    alert('room not found');
+  });
+
+  socket.on('request estimate', function(room) {
+    $('.join-room-container').hide();
+    $('.loader-container').hide();
+    $('.estimate-container').show();
+    update(room);
+  });
+
+  socket.on('update', function(room) {
+    update(room);
+  });
+
+  function update(room) {
+    var estimateCount = 0;
+    var users = Object.keys(room.users);
+
+    for (var i = 0; i < users.length; i ++) {
+      if (room.users[users[i]] !== -1) {
+        estimateCount++;
+      }
+    }
+
+    $('.estimate-progress').width(estimateCount/users.length * 100 + '%');
+  }
 });
