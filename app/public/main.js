@@ -8,7 +8,11 @@ $(document).ready(function () {
   });
 
   $('.estimate-button').click(function estimate() {
-    socket.emit('estimate', parseInt($(this).data("estimate")));
+    var estimate = parseInt($(this).data("estimate"));
+    socket.emit('estimate', estimate);
+
+    $('.estimate-button').removeClass('w3-green w3-hover-green');
+    $('.estimate-button[data-estimate='+estimate+']').addClass('w3-green w3-hover-green');
   });
 
   socket.on('join success', function() {
@@ -25,6 +29,7 @@ $(document).ready(function () {
     $('.join-room-container').hide();
     $('.loader-container').hide();
     $('.estimate-container').show();
+    $('.estimate-button').removeClass('w3-green w3-hover-green');
   });
 
   socket.on('update', function(room) {
