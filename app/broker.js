@@ -32,18 +32,19 @@ function Broker(socket) {
         }
       });
 
-      clientSocket.on('estimate', function(estimate) {
-        session[room].users[user] = estimate;
-
-        serverSocket.to(room).emit('update', session[room]);
-      });
-
       clientSocket.on('request estimate', function() {
         var users = Object.keys(session[room].users);
         for (var i = 0; i < users.length; i ++) {
           session[room].users[users[i]] = -1;
         }
-        serverSocket.to(room).emit('request estimate', session[room]);
+        serverSocket.to(room).emit('request estimate');
+        serverSocket.to(room).emit('update', session[room]);
+      });
+
+      clientSocket.on('estimate', function(estimate) {
+        session[room].users[user] = estimate;
+
+        serverSocket.to(room).emit('update', session[room]);
       });
 
       clientSocket.on('disconnect', function() {

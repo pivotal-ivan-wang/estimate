@@ -21,18 +21,13 @@ $(document).ready(function () {
     alert('room not found');
   });
 
-  socket.on('request estimate', function(room) {
+  socket.on('request estimate', function() {
     $('.join-room-container').hide();
     $('.loader-container').hide();
     $('.estimate-container').show();
-    update(room);
   });
 
   socket.on('update', function(room) {
-    update(room);
-  });
-
-  function update(room) {
     var estimateCount = 0;
     var users = Object.keys(room.users);
 
@@ -43,5 +38,5 @@ $(document).ready(function () {
     }
 
     $('.estimate-progress').width(estimateCount/users.length * 100 + '%');
-  }
+  });
 });
