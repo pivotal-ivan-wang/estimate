@@ -7,7 +7,7 @@ installing chrome plugin:
 deploying app to heroku:
 
 ```
-git subtree push --prefix app heroku master
+git push heroku `git subtree split --prefix app master`:master
 ```
 
 running app:
