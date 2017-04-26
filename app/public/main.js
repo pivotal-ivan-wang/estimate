@@ -30,6 +30,7 @@ $(document).ready(function () {
     $('.loader-container').hide();
     $('.estimate-container').show();
     $('.estimate-button').removeClass('w3-green w3-hover-green');
+    $('.average-estimate').hide();
   });
 
   socket.on('update', function(room) {
@@ -43,5 +44,11 @@ $(document).ready(function () {
     }
 
     $('.estimate-progress').width(estimateCount/users.length * 100 + '%');
+  });
+
+  socket.on('estimate complete', function(estimate) {
+    $('.estimate-progress-bar').hide();
+    $('.average-estimate').html(estimate);
+    $('.average-estimate').show();
   });
 });

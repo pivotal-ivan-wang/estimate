@@ -43,8 +43,14 @@ function Broker(socket) {
 
       clientSocket.on('estimate', function(estimate) {
         session[room].users[user] = estimate;
-
         serverSocket.to(room).emit('update', session[room]);
+
+        var estimates = Object.keys(session[room].users).map(function(key) {
+          return session[room].users[key];
+        });
+        if (hasAllEstimates(estimates)) {
+          serverSocket.to(room).emit('estimate complete', getAverageEstimate(estimates));
+        }
       });
 
       clientSocket.on('disconnect', function() {
@@ -64,7 +70,7 @@ function Broker(socket) {
 
       clientSocket.on('ping', function() {
         clientSocket.emit('ping');
-      })
+      });
     });
   };
 
@@ -72,10 +78,44 @@ function Broker(socket) {
     if (session[room] === undefined) {
       session[room] = {};
     }
-  }
+  };
 
   this.getSession = function() {
     return session;
+  };
+
+  function hasAllEstimates(estimates) {
+    for (var i = 0; i < estimates.length; i ++) {
+      if (estimates[i] == -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function getAverageEstimate(estimates) {
+    var map = {};
+    var maxCount = 1;
+    for (var i = 0; i < estimates.length; i ++) {
+      var estimate = estimates[i];
+      if (map[estimate] == undefined) {
+        map[estimate] = 1;
+      } else {
+        map[estimate]++;
+        if (map[estimate] > maxCount) {
+          maxCount = map[estimate];
+        }
+      }
+    }
+
+    var mode = -1;
+    for (var key in map) {
+      if (map[key] == maxCount && key > mode) {
+        mode = key;
+      }
+    }
+
+    return mode;
   }
 };
 

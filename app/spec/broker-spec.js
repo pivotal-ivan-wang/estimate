@@ -82,6 +82,7 @@ describe('broker', function() {
         onEstimate(2);
         expect(serverSocket.to).toHaveBeenCalledWith('room0');
         expect(serverSocket.emit).toHaveBeenCalledWith('update', { 'roomName': 'room0', 'users': { 'user2': 2 } });
+        expect(serverSocket.emit).toHaveBeenCalledWith('estimate complete', '2');
       });
     });
 
