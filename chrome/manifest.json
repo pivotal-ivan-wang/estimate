@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Estimates for Pivotal Tracker",
-  "short_name": "Estimate",
-  "description": "Injects stuff",
+  "name": "Remote IPM for Pivotal Tracker",
+  "short_name": "Remote IPM",
+  "description": "Point stories in real time.",
   "version": "1.0",
   "author": "Ivan Wang",
   "homepage_url": "https://github.com/pivotal-ivan-wang/remote-ipm",
