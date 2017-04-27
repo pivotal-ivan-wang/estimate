@@ -32,12 +32,12 @@ function Broker(socket) {
         }
       });
 
-      clientSocket.on('request estimate', function() {
+      clientSocket.on('request estimate', function(data) {
         var users = Object.keys(session[room].users);
         for (var i = 0; i < users.length; i ++) {
           session[room].users[users[i]] = -1;
         }
-        serverSocket.to(room).emit('request estimate');
+        serverSocket.to(room).emit('request estimate', data);
         serverSocket.to(room).emit('update', session[room]);
       });
 

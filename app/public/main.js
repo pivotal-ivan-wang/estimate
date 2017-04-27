@@ -25,12 +25,14 @@ $(document).ready(function () {
     alert('room not found');
   });
 
-  socket.on('request estimate', function() {
+  socket.on('request estimate', function(storyData) {
     $('.join-room-container').hide();
     $('.loader-container').hide();
     $('.estimate-container').show();
     $('.estimate-button').removeClass('w3-green w3-hover-green');
     $('.average-estimate').hide();
+    $('.story-title').html(storyData.title);
+    $('.story-url').html(storyData.url);
   });
 
   socket.on('update', function(room) {

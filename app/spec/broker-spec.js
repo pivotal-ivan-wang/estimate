@@ -70,9 +70,10 @@ describe('broker', function() {
 
     describe('on request estimate', function() {
       it('should set all user estimates to -1', function() {
-        onRequestEstimate();
+        var data = { title: "title", url: "url" };
+        onRequestEstimate(data);
         expect(serverSocket.to).toHaveBeenCalledWith('room0');
-        expect(serverSocket.emit).toHaveBeenCalledWith('request estimate');
+        expect(serverSocket.emit).toHaveBeenCalledWith('request estimate', data);
         expect(serverSocket.emit).toHaveBeenCalledWith('update', { 'roomName': 'room0', 'users': { 'user2': -1 } });
       });
     });

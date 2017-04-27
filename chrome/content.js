@@ -110,7 +110,7 @@ chrome.extension.sendMessage({}, function(response) {
               estimateButton.className = 'estimate-button';
               estimateButton.innerHTML = "Estimate";
               estimateButton.onclick = function() {
-                socket.emit('request estimate');
+                socket.emit('request estimate', hackedStoryData(row));
                 estimateDialog.showModal();
               };
               row.appendChild(estimateButton);
@@ -150,4 +150,12 @@ function setupDialog(dialog) {
         dialog.close();
     }
   };
+}
+
+function hackedStoryData(row) {
+  //jQuery would be slightly prettier
+  var form = row.parentElement.parentElement.parentElement.parentElement.parentElement;
+  var storyTitle = form.querySelectorAll('fieldset.story.name')[0].querySelectorAll('textarea')[0].innerHTML;
+  var storyUrl = form.querySelectorAll('button.clipboard_button.left_endcap')[0].getAttribute('data-clipboard-text');
+  return { title: storyTitle, url: storyUrl };
 }
