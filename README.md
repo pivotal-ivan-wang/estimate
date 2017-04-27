@@ -7,7 +7,7 @@ installing chrome plugin:
 deploying app to heroku:
 
 ```
-git push heroku `git subtree split --prefix app master`:master
+git push heroku master
 ```
 
 running app:
@@ -19,6 +19,8 @@ heroku open
 running tests:
 
 ```
-cd app
 jasmine
 ```
+
+heroku credentials:
+talk to Ivan
