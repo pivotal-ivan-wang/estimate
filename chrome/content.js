@@ -15,6 +15,10 @@ chrome.extension.sendMessage({}, function(response) {
         updateEstimateDialog();
       });
 
+      socket.on('estimate complete', function(averageEstimate) {
+        revealEstimate(averageEstimate);
+      });
+
       //create dialogs:
       var ipmCreateRoomDialog = document.createElement('dialog');
       ipmCreateRoomDialog.className = 'ipm-create-room-dialog';
@@ -67,12 +71,14 @@ chrome.extension.sendMessage({}, function(response) {
             }
           }
           estimateDialog.innerHTML = '<p>' + estimateCount + '/' + users.length + '</p>';
+        }
+      }
 
-          if (estimateCount == users.length) {
-            for (var i = 0; i < users.length; i ++) {
-              estimateDialog.innerHTML += '<p>' + users[i] + ': ' + roomSession.users[users[i]] + '</p>';
-            }
-          }
+      function revealEstimate(averageEstimate) {
+        estimateDialog.innerHTML = '<p>group estimate: '+averageEstimate+'</p>';
+        var users = Object.keys(roomSession.users);
+        for (var i = 0; i < users.length; i ++) {
+          estimateDialog.innerHTML += '<p>' + users[i] + ': ' + roomSession.users[users[i]] + '</p>';
         }
       }
 
