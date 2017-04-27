@@ -30,6 +30,8 @@ $(document).ready(function () {
     $('.loader-container').hide();
     $('.estimate-container').show();
     $('.estimate-button').removeClass('w3-green w3-hover-green');
+    $('.estimate-progress-bar').show();
+    $('.estimate-progress').width('0%');
     $('.average-estimate').hide();
     $('.story-title').html(storyData.title);
     $('.story-link').html(storyData.url);
