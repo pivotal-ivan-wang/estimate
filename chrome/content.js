@@ -4,7 +4,7 @@ chrome.extension.sendMessage({}, function(response) {
       clearInterval(readyStateCheckInterval);
 
       //socket stuff
-      var socket = io.connect('https://stark-springs-85101.herokuapp.com');
+      var socket = io.connect('https://mysterious-tundra-16826.herokuapp.com');
 
       var openRoom;
       var roomSession;
