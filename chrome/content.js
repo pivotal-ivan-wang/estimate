@@ -22,6 +22,11 @@ chrome.extension.sendMessage({}, function(response) {
       document.body.appendChild(ipmCreateRoomDialog);
       setupDialog(ipmCreateRoomDialog);
 
+      var ipmRoomDialog = document.createElement('dialog');
+      ipmRoomDialog.className = 'ipm-room-dialog';
+      document.body.appendChild(ipmRoomDialog);
+      setupDialog(ipmRoomDialog);
+
       var roomInput = document.getElementsByClassName("room-input")[0];
       var createIpmButton = document.getElementsByClassName("create-ipm-button")[0];
       createIpmButton.onclick = function() {
@@ -31,13 +36,9 @@ chrome.extension.sendMessage({}, function(response) {
           var listItem = document.getElementsByClassName('ipm-room')[0];
           listItem.innerHTML = 'IPM room: ' + openRoom;
           ipmCreateRoomDialog.close();
+          ipmRoomDialog.showModal();
         }
       };
-
-      var ipmRoomDialog = document.createElement('dialog');
-      ipmRoomDialog.className = 'ipm-room-dialog';
-      document.body.appendChild(ipmRoomDialog);
-      setupDialog(ipmRoomDialog);
 
       function updateIpmRoomDialog() {
         if (roomSession !== undefined) {
