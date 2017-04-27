@@ -34,7 +34,6 @@ $(document).ready(function () {
     $('.estimate-progress').width('0%');
     $('.average-estimate').hide();
     $('.story-title').html(storyData.title);
-    $('.story-link').html(storyData.url);
     $('.story-link').attr("href", storyData.url)
   });
 
