@@ -32,7 +32,8 @@ $(document).ready(function () {
     $('.estimate-button').removeClass('w3-green w3-hover-green');
     $('.average-estimate').hide();
     $('.story-title').html(storyData.title);
-    $('.story-url').html(storyData.url);
+    $('.story-link').html(storyData.url);
+    $('.story-link').attr("href", storyData.url)
   });
 
   socket.on('update', function(room) {
