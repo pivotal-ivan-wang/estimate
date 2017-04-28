@@ -25,6 +25,12 @@ $(document).ready(function () {
     alert('room not found');
   });
 
+  socket.on('kick out', function() {
+    $('.join-room-container').show();
+    $('.estimate-container').hide();
+    $('.loader-container').hide();
+  });
+
   socket.on('request estimate', function(storyData) {
     $('.join-room-container').hide();
     $('.loader-container').hide();

@@ -76,7 +76,7 @@ function Broker(socket) {
 
       function killRoom() {
         delete session[room];
-        serverSocket.to(room).emit('update', session[room]);
+        serverSocket.to(room).emit('kick out');
         clientSocket.leave(room);
       }
     });

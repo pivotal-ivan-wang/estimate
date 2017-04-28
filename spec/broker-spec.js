@@ -66,7 +66,7 @@ describe('broker', function() {
       it('should kill room', function() {
         onEndHost();
         expect(serverSocket.to).toHaveBeenCalledWith('room0');
-        expect(serverSocket.emit).toHaveBeenCalledWith('update', undefined);
+        expect(serverSocket.emit).toHaveBeenCalledWith('kick out');
         expect(clientSocket.leave).toHaveBeenCalledWith('room0');
       });
     });
@@ -115,7 +115,7 @@ describe('broker', function() {
         onHost('room0');
         onDisconnect();
         expect(serverSocket.to).toHaveBeenCalledWith('room0');
-        expect(serverSocket.emit).toHaveBeenCalledWith('update', undefined);
+        expect(serverSocket.emit).toHaveBeenCalledWith('kick out');
         expect(clientSocket.leave).toHaveBeenCalledWith('room0');
       });
     });

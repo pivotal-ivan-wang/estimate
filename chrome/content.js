@@ -56,9 +56,10 @@ chrome.extension.sendMessage({}, function(response) {
           ipmRoomDialog.innerHTML += '<br><button class="end-ipm-button">End IPM</button>';
           var endIpmButton = document.getElementsByClassName('end-ipm-button')[0];
           endIpmButton.onclick = function() {
-            socket.emit('disconnect');
+            socket.emit('end host');
             var listItem = document.getElementsByClassName('ipm-room')[0];
             listItem.innerHTML = "Start IPM";
+            ipmRoomDialog.close();
           };
         }
       }
