@@ -46,12 +46,20 @@ chrome.extension.sendMessage({}, function(response) {
 
       function updateIpmRoomDialog() {
         if (roomSession !== undefined) {
-          ipmRoomDialog.innerHTML = '<p>room: '+ roomSession.roomName + '</p>'
-          + '<p>users:</p>';
+          ipmRoomDialog.innerHTML = '<p>Room: '+ roomSession.roomName + '</p>'
+          + '<br><p>Users:</p>';
           var users = Object.keys(roomSession.users);
           for (var i = 0; i < users.length; i ++) {
             ipmRoomDialog.innerHTML += '<p>' + users[i] + '</p>';
           }
+
+          ipmRoomDialog.innerHTML += '<br><button class="end-ipm-button">End IPM</button>';
+          var endIpmButton = document.getElementsByClassName('end-ipm-button')[0];
+          endIpmButton.onclick = function() {
+            socket.emit('disconnect');
+            var listItem = document.getElementsByClassName('ipm-room')[0];
+            listItem.innerHTML = "Start IPM";
+          };
         }
       }
 

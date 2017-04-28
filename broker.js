@@ -16,6 +16,10 @@ function Broker(socket) {
         clientSocket.emit('update', session[room]);
       });
 
+      clientSocket.on('end host', function() {
+        killRoom();
+      });
+
       clientSocket.on('join', function(data) {
         isHost = false;
         room = data.room;
@@ -55,9 +59,7 @@ function Broker(socket) {
 
       clientSocket.on('disconnect', function() {
         if (isHost) {
-          delete session[room];
-          serverSocket.to(room).emit('update', session[room]);
-          clientSocket.leave(room);
+          killRoom();
         } else {
           if (session[room] !== undefined) {
             delete session[room].users[user];
@@ -71,6 +73,12 @@ function Broker(socket) {
       clientSocket.on('ping', function() {
         clientSocket.emit('ping');
       });
+
+      function killRoom() {
+        delete session[room];
+        serverSocket.to(room).emit('update', session[room]);
+        clientSocket.leave(room);
+      }
     });
   };
 

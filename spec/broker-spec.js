@@ -22,6 +22,7 @@ describe('broker', function() {
   describe('on connection', function() {
     var clientSocket = jasmine.createSpyObj('socket', ['on', 'join', 'emit', 'leave']);
     var onHost;
+    var onEndHost;
     var onJoin;
     var onRequestEstimate;
     var onEstimate;
@@ -31,20 +32,22 @@ describe('broker', function() {
     beforeEach(function() {
       onConnection(clientSocket);
       onHost = clientSocket.on.calls.argsFor(0)[1];
-      onJoin = clientSocket.on.calls.argsFor(1)[1];
-      onRequestEstimate = clientSocket.on.calls.argsFor(2)[1];
-      onEstimate = clientSocket.on.calls.argsFor(3)[1];
-      onDisconnect = clientSocket.on.calls.argsFor(4)[1];
-      onPing = clientSocket.on.calls.argsFor(5)[1];
+      onEndHost = clientSocket.on.calls.argsFor(1)[1];
+      onJoin = clientSocket.on.calls.argsFor(2)[1];
+      onRequestEstimate = clientSocket.on.calls.argsFor(3)[1];
+      onEstimate = clientSocket.on.calls.argsFor(4)[1];
+      onDisconnect = clientSocket.on.calls.argsFor(5)[1];
+      onPing = clientSocket.on.calls.argsFor(6)[1];
     });
 
     it('should setup client events', function() {
       expect(clientSocket.on.calls.argsFor(0)[0]).toBe('host');
-      expect(clientSocket.on.calls.argsFor(1)[0]).toBe('join');
-      expect(clientSocket.on.calls.argsFor(2)[0]).toBe('request estimate');
-      expect(clientSocket.on.calls.argsFor(3)[0]).toBe('estimate');
-      expect(clientSocket.on.calls.argsFor(4)[0]).toBe('disconnect');
-      expect(clientSocket.on.calls.argsFor(5)[0]).toBe('ping');
+      expect(clientSocket.on.calls.argsFor(1)[0]).toBe('end host');
+      expect(clientSocket.on.calls.argsFor(2)[0]).toBe('join');
+      expect(clientSocket.on.calls.argsFor(3)[0]).toBe('request estimate');
+      expect(clientSocket.on.calls.argsFor(4)[0]).toBe('estimate');
+      expect(clientSocket.on.calls.argsFor(5)[0]).toBe('disconnect');
+      expect(clientSocket.on.calls.argsFor(6)[0]).toBe('ping');
     });
 
     describe('on host', function() {
@@ -52,6 +55,19 @@ describe('broker', function() {
         onHost('room0');
         expect(clientSocket.join).toHaveBeenCalledWith('room0');
         expect(clientSocket.emit).toHaveBeenCalledWith('update', { 'roomName': 'room0', 'users': {} });
+      });
+    });
+
+    describe('on end host', function() {
+      afterEach(function() {
+        onHost('room0');
+      });
+
+      it('should kill room', function() {
+        onEndHost();
+        expect(serverSocket.to).toHaveBeenCalledWith('room0');
+        expect(serverSocket.emit).toHaveBeenCalledWith('update', undefined);
+        expect(clientSocket.leave).toHaveBeenCalledWith('room0');
       });
     });
 
