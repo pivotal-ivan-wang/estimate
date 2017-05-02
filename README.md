@@ -15,6 +15,7 @@ running app:
 ```
 heroku open
 ```
+or https://mysterious-tundra-16826.herokuapp.com/
 
 running tests:
 
